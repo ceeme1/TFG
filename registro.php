@@ -68,7 +68,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             color:rgb(3, 3, 2);
             margin-bottom: 15px;
         }
+        .mensaje {
+        font-size: 16px;
+        padding: 10px;
+        border-radius: 5px;
+        margin-bottom: 15px;
+        font-weight: bold;
+        }
 
+        .mensaje.error {
+            background-color: #ffdddd;
+            color: #d8000c;
+            border: 1px solid #d8000c;
+        }
+
+        .mensaje.exito {
+            background-color: #ddffdd;
+            color: #270;
+            border: 1px solid #270;
+        }
+
+        .centrado {
+            text-align: center;
+            margin-top: 10px;
+        }
         input[type="text"],
         input[type="password"] {
             width: 100%;
@@ -135,7 +158,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <?php endif; ?>
 
             <form method="POST">
-                <input name="nombre" placeholder="Usuario" required>
+                <input name="nombre" type="text" placeholder="Usuario" required>
                 <input name="contra" type="password" placeholder="Contraseña" required>
                 <input type="submit" value="Registrarse">
             </form>
