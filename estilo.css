@@ -1,0 +1,168 @@
+/* === RESET Y FUENTES === */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+    background: url('https://i.makeagif.com/media/3-21-2019/I1s5Qr.gif') center center fixed;
+    background-size: cover;
+    color: #5d3c0a;
+    line-height: 1.6;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+    overflow-x: hidden;
+}
+
+/* === CONTENEDOR FLEX GENERAL === */
+.main-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 1200px;
+    width: 100%;
+    gap: 20px;
+}
+
+/* Landscape: contenido en línea */
+@media (orientation: landscape) and (min-width: 768px) {
+    .main-container {
+        flex-direction: row;
+        justify-content: center;
+        align-items: flex-start;
+    }
+}
+
+/* === FORMULARIO === */
+.form-section {
+    background: #daaf2241;
+    padding: 20px;
+    border-radius: 12px;
+    flex: 1;
+    min-width: 280px;
+    max-width: 450px;
+    box-shadow: 0 4px 15px #da920d9f;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="number"],
+input[type="url"],
+select {
+    padding: 10px;
+    border: 1px solid #da920d9f;
+    background-color: #ff9500a0;
+    border-radius: 4px;
+    transition: 0.3s;
+    color: #5d3c0a;
+}
+
+input:focus,
+select:focus {
+    border-color: #eea321;
+    outline: none;
+    box-shadow: 0 0 8px #e4be18a9;
+}
+
+button,
+input[type="submit"] {
+    background-color: #da920d9f;
+    color: black; /* CAMBIADO de blanco a negro */
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover,
+input[type="submit"]:hover {
+    background-color: #eea321;
+}
+
+/* === TABLA DE CERVEZAS === */
+.table-section {
+    background: #ff9500a0;
+    padding: 20px;
+    border-radius: 12px;
+    flex: 2;
+    width: 100%;
+    max-width: 700px;
+    box-shadow: 0 4px 15px #da920d9f;
+    overflow-x: auto;
+    max-height: 400px;
+    overflow-y: auto;
+
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.table-section::-webkit-scrollbar {
+    display: none;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+table th,
+table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #da920d9f;
+    color: #5d3c0a;
+}
+
+table th {
+    background-color: #eea321;
+    color: black; /* CAMBIADO de blanco a negro */
+}
+
+table img {
+    height: 50px;
+    border-radius: 4px;
+}
+
+/* === ENCABEZADOS Y TEXTOS === */
+h1, h2, h3 {
+    text-align: center;
+    color: #0000009f;
+    margin-bottom: 20px;
+}
+
+/* === MENSAJES === */
+.error {
+    color: #c0392b;
+    text-align: center;
+}
+
+.success {
+    color: #27ae60;
+    text-align: center;
+}
+
+/* === ENLACES === */
+a {
+    color: #e4be18a9;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
