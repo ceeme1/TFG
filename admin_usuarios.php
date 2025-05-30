@@ -80,9 +80,15 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
             justify-content: space-between;
             align-items: center;
             margin-bottom: 10px;
-            padding: 10px;
-            background: #fff3dd;
-            border-radius: 5px;
+            padding: 10px 15px;
+            background:rgba(231, 193, 55, 0.65);
+            border: 1px solid #e0c891;
+            border-radius: 6px;
+            transition: background-color 0.3s ease;
+        }
+
+        .usuario-item:hover {
+            background-color: #f3ead2;
         }
 
         .usuario-nombre {
@@ -92,7 +98,7 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         .btn-eliminar {
             background-color: #cc0000;
-            color: white;
+            color: black;
             border: none;
             padding: 6px 12px;
             border-radius: 4px;
@@ -133,6 +139,23 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
         .btn-volver:hover {
             background-color: #eea321;
         }
+
+        .btn-cerrar-sesion {
+            background-color:rgb(208, 148, 19);
+            color: black;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 12px;
+        }
+
+        .btn-cerrar-sesion:hover {
+            background-color:rgb(179, 116, 0);
+        }
     </style>
 </head>
 <body>
@@ -165,7 +188,8 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <?php endif; ?>
             </div>
 
-            <a href="login.php" class="btn-volver">Volver a inicio</a>
+            
+            <a href="logout.php" class="btn-cerrar-sesion">Cerrar sesión</a>
         </section>
     </div>
 </body>
