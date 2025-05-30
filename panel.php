@@ -425,7 +425,12 @@ $cervezas = $stmt->fetchAll();
                                     <td><?= htmlspecialchars($c['fermentacion']) ?></td>
                                     <td><?= htmlspecialchars($c['graduacion']) ?>%</td>
                                     <td>
-                                        <img src="<?= htmlspecialchars($c['imagen']) ?>" alt="Imagen" onclick="document.getElementById('fileInput<?= $c['id'] ?>').click();">
+                                        <?php if (!empty($c['imagen'])): ?>
+                                            <img src="<?= htmlspecialchars($c['imagen']) ?>" alt="Imagen" onclick="document.getElementById('fileInput<?= $c['id'] ?>').click();">
+                                        <?php else: ?>
+                                            <span style="font-size: 2rem; cursor: default;">😢</span>
+                                        <?php endif; ?>
+
                                         <form method="POST" action="subir_imagen.php" enctype="multipart/form-data" style="display:none;">
                                             <input type="hidden" name="cerveza_id" value="<?= $c['id'] ?>">
                                             <input type="file" name="nueva_imagen" id="fileInput<?= $c['id'] ?>" accept="image/*" onchange="this.form.submit();">
@@ -467,11 +472,14 @@ $cervezas = $stmt->fetchAll();
         </form>
     </div>
 
-    <div class="inicio">
-        <a href="logout.php">Cerrar sesión</a>
-    </div>
+<div class="inicio">
+    <form action="editar_mi_perfil.php" method="get" style="display:inline;">
+        <button type="submit">Editar mi perfil</button>
+    </form>
+    <form action="logout.php" method="get" style="display:inline;">
+        <button type="submit">Cerrar sesión</button>
+    </form>
 </div>
-
 <script>
   function ajustarPaddingMain() {
     const header = document.querySelector('.header-top');

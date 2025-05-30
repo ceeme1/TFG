@@ -47,7 +47,7 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
             display: flex;
             justify-content: center;
             align-items: center;
-            background: url('https://i.makeagif.com/media/3-21-2019/I1s5Qr.gif') center center fixed;
+            background-image: url('assets/beerapp.gif') center center fixed;
             background-size: cover;
             font-family: 'Segoe UI', sans-serif;
         }

@@ -37,14 +37,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="estilo.css">
     <style>
         body {
-            text:center;
+            text-align:center;
             margin: 0;
             padding: 0;
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            background: url('https://i.makeagif.com/media/3-21-2019/I1s5Qr.gif') center center fixed;
+            background: url('assets/beerapp.gif') no-repeat center center fixed;
             background-size: cover;
             font-family: 'Segoe UI', sans-serif;
         }
