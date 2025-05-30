@@ -69,7 +69,7 @@ $cervezas = $stmt->fetchAll();
             margin: 0;
             color: black;
         }
-
+        
         .header-top {
             width: 100%;
             display: flex;
@@ -179,21 +179,64 @@ $cervezas = $stmt->fetchAll();
         }
 
         @media (max-width: 991px) {
-            .contenido-flex {
-                flex-direction: column;
-                align-items: center;
-                width: 100%;
-            }
-
-            .form-section, .table-section {
-                width: 100%;
-            }
-
-            .formularios-abajo {
-                flex-direction: column;
-                width: 100%;
-            }
+                    body, html {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow-y: auto; /* que se pueda hacer scroll vertical siempre */
         }
+
+        .main-container {
+            margin-top:540px;
+            padding-top: 120px; /* espacio para header fijo */
+            padding-left: 10px;
+            padding-right: 10px;
+            box-sizing: border-box;
+        }
+    .contenido-flex {
+        flex-direction: column;
+        align-items: stretch;
+        width: 100%;
+        gap: 30px; /* más espacio entre formulario y tabla */
+        padding: 0 10px; /* evitar que toque los bordes de la pantalla */
+        box-sizing: border-box;
+    }
+
+    .form-section, .table-section {
+        width: 100%;
+        max-width: none;
+        box-sizing: border-box;
+        min-width: 0; /* para evitar que flex los expanda más allá del contenedor */
+    }
+
+    .table-section {
+        overflow-x: auto;
+    }
+
+    table {
+        min-width: 600px;
+        font-size: 14px;
+    }
+
+    table img {
+        max-height: 80px;
+    }
+
+    .formularios-abajo {
+        flex-direction: column;
+        width: 100%;
+        gap: 15px;
+        padding: 0 10px;
+        box-sizing: border-box;
+    }
+
+    form input, form select, form button {
+        width: 100%;
+        box-sizing: border-box;
+        margin-bottom: 10px;
+        font-size: 16px;
+    }
+}
     </style>
 </head>
 <body>
