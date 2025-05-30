@@ -8,13 +8,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nombre = $_POST['nombre'];
     $contra = $_POST['contra'];
 
-    $stmt = $pdo->prepare("SELECT id, contra FROM users WHERE nombre = ?");
+    $stmt = $pdo->prepare("SELECT id, contra, es_admin FROM users WHERE nombre = ?");
     $stmt->execute([$nombre]);
     $usuario = $stmt->fetch();
 
     if ($usuario && password_verify($contra, $usuario['contra'])) {
         $_SESSION['user_id'] = $usuario['id'];
-        header("Location: panel.php");
+
+        // Verificación de administrador
+        if (!empty($usuario['es_admin'])) {
+            $_SESSION['admin'] = true;
+            header("Location: admin_usuarios.php");
+        } else {
+            header("Location: panel.php");
+        }
         exit;
     } else {
         $error = "Credenciales incorrectas.";
@@ -26,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Iniciar Sesión</title>
+    <title>OTRAPP!!!</title>
     <link rel="stylesheet" href="estilo.css">
     <style>
         body {

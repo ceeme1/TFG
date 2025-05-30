@@ -9,11 +9,9 @@ if (!isset($_SESSION['user_id'])) {
 
 $user_id = $_SESSION['user_id'];
 
-// Obtener el nombre del usuario desde la base de datos
 $stmtUser = $pdo->prepare("SELECT nombre FROM users WHERE id = ?");
 $stmtUser->execute([$user_id]);
 $userData = $stmtUser->fetch();
-
 $username = $userData ? $userData['nombre'] : "Usuario";
 
 $dbStatus = $pdo ? "Conexión a BD: OK" : "Conexión a BD: ERROR";
@@ -42,17 +40,36 @@ $cervezas = $stmt->fetchAll();
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Mi colección de cervezas</title>
+    <title>Mi OTRAPP!!!</title>
     <link rel="stylesheet" href="estilo.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script>
+        function descargarTabla() {
+            const boton = document.querySelector('#boton-descarga');
+            const tabla = document.getElementById('captura-tabla');
+
+            boton.style.visibility = 'hidden';
+
+            html2canvas(tabla, {
+                useCORS: true,
+                scale: 2
+            }).then(canvas => {
+                boton.style.visibility = 'visible';
+                const enlace = document.createElement('a');
+                enlace.download = 'mi_tabla_de_cervezas.png';
+                enlace.href = canvas.toDataURL('image/png');
+                enlace.click();
+            });
+        }
+    </script>
     <style>
         body {
             padding: 20px;
-            color: black;
-            margin: 0;
             font-family: Arial, sans-serif;
+            margin: 0;
+            color: black;
         }
-
-        /* Contenedor cabecera superior */
+        
         .header-top {
             width: 100%;
             display: flex;
@@ -61,40 +78,27 @@ $cervezas = $stmt->fetchAll();
             padding: 10px 20px;
             background-color: #ff9500a0;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            box-sizing: border-box;
             position: fixed;
             top: 0;
             left: 0;
             z-index: 1000;
             font-weight: bold;
-            color: black;
         }
 
-        .header-left {
-            font-size: 1rem;
-        }
-
-        .header-right {
-            font-size: 1rem;
-        }
-
-        /* Para que el contenido no quede oculto tras la cabecera fija */
         .main-container {
             display: flex;
             flex-direction: column;
-            gap: 30px;
             align-items: center;
-            color: black;
-            padding-top: 120px; /* espacio para la cabecera fija */
+            padding-top: 20px; /* Ajustado con JS */
+            gap: 30px;
         }
 
         .contenido-flex {
             display: flex;
             gap: 20px;
             flex-wrap: nowrap;
-            width: 100%;
             justify-content: center;
-            color: black;
+            width: 100%;
         }
 
         .form-section {
@@ -105,7 +109,6 @@ $cervezas = $stmt->fetchAll();
             flex: 1;
             min-width: 280px;
             max-width: 400px;
-            color: black;
         }
 
         .table-section {
@@ -115,144 +118,292 @@ $cervezas = $stmt->fetchAll();
             box-shadow: 0 4px 15px #da920d9f;
             flex: 2;
             min-width: 320px;
-            color: black;
         }
 
-        /* Aquí el scroll con altura fija y scroll vertical */
         .table-scroll {
-            max-height: 400px; /* altura fija para scroll */
+            max-height: 400px;
             overflow-y: auto;
-            -webkit-overflow-scrolling: touch;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            color: black;
         }
 
         table th, table td {
             padding: 10px;
             text-align: left;
             border-bottom: 1px solid #da920d9f;
-            color: black;
         }
 
-        /* Cabecera sticky */
         table th {
             position: sticky;
             top: 0;
             background-color: #eea321;
-            color: black;
             z-index: 10;
         }
 
         table img {
             max-height: 120px;
             border-radius: 4px;
-        }
-
-        form {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            color: black;
-        }
-
-        select, input, button {
-            padding: 8px;
-            color: black;
+            cursor: pointer;
         }
 
         .formularios-abajo {
             display: flex;
             gap: 20px;
             flex-wrap: wrap;
-            margin-top: 20px;
             justify-content: center;
-            color: black;
+            margin-top: 20px;
         }
 
         .inicio {
             margin-top: 30px;
             text-align: center;
-            color: black;
         }
 
-        /* Resaltado enlace cerrar sesión */
         .inicio a {
-            color: #eea321;
+            color:rgb(135, 95, 26);
             font-weight: bold;
             text-decoration: none;
-            font-size: 1.1rem;
             padding: 8px 16px;
-            border: 2px solid #eea321;
+            border: 2px solidrgb(77, 50, 3);
             border-radius: 6px;
             transition: background-color 0.3s, color 0.3s;
         }
+
         .inicio a:hover {
             background-color: #eea321;
             color: black;
         }
 
         @media (max-width: 991px) {
+            body, html {
+                height: 100%;
+                margin: 0;
+                padding: 0;
+                overflow-y: auto; /* que se pueda hacer scroll vertical siempre */
+            }
+
+            .main-container {
+                /* Quitar margin-top fijo grande */
+                padding-top: 20px; /* será ajustado por JS */
+                padding-left: 10px;
+                padding-right: 10px;
+                box-sizing: border-box;
+            }
             .contenido-flex {
-                flex-direction: column !important;
-                align-items: center;
-                gap: 20px;
+                flex-direction: column;
+                align-items: stretch;
                 width: 100%;
+                gap: 30px; /* más espacio entre formulario y tabla */
+                padding: 0 10px; /* evitar que toque los bordes de la pantalla */
+                box-sizing: border-box;
             }
 
             .form-section, .table-section {
-                max-width: 100%;
                 width: 100%;
-                flex: none;
+                max-width: none;
+                box-sizing: border-box;
+                min-width: 0; /* para evitar que flex los expanda más allá del contenedor */
             }
 
-            .formularios-abajo {
-                flex-direction: column !important;
-                gap: 15px;
-                width: 100%;
-                max-width: 100%;
-            }
-        }
-
-        @media (max-width: 767px) {
-            form select, form input, form button {
-                font-size: 1.1rem;
+            .table-section {
+                overflow-x: auto;
             }
 
             table {
-                min-width: 100%;
+                min-width: 600px;
+                font-size: 14px;
+            }
+
+            table img {
+                max-height: 80px;
+            }
+
+            .formularios-abajo {
+                flex-direction: column;
+                width: 100%;
+                gap: 15px;
+                padding: 0 10px;
+                box-sizing: border-box;
+            }
+
+            form input, form select, form button {
+                width: 100%;
+                box-sizing: border-box;
+                margin-bottom: 10px;
+                font-size: 16px;
+            }
+        }
+
+        @media (max-width: 899px) {
+            body, html {
+                height: 100%;
+                margin: 0;
+                padding: 0;
+                overflow-y: auto; /* permitir scroll vertical */
+            }
+
+            .main-container {
+                /* Quitar margin-top fijo grande */
+                padding-top: 20px; /* será ajustado por JS */
+                padding-left: 10px;
+                padding-right: 10px;
+                box-sizing: border-box;
+            }
+
+            .contenido-flex {
+                flex-direction: column;
+                align-items: stretch;
+                width: 100%;
+                gap: 25px; /* espacio entre form y tabla */
+                padding: 0 10px;
+                box-sizing: border-box;
+            }
+
+            .form-section,
+            .table-section {
+                width: 100%;
+                max-width: none;
+                box-sizing: border-box;
+                min-width: 0;
+                padding: 15px;
+                font-size: 14px;
+            }
+
+            .table-section {
+                overflow-x: auto; /* scroll horizontal para tablas */
+            }
+
+            table {
+                min-width: 600px; /* ancho mínimo para que tabla no se achique */
+                font-size: 13px;
+            }
+
+            table img {
+                max-height: 60px;
+            }
+
+            .formularios-abajo {
+                flex-direction: column;
+                width: 100%;
+                gap: 15px;
+                padding: 0 10px;
+                box-sizing: border-box;
+            }
+
+            form input,
+            form select,
+            form button {
+                width: 100%;
+                box-sizing: border-box;
+                margin-bottom: 10px;
+                font-size: 16px;
+                padding: 8px;
+            }
+
+            button#boton-descarga {
+                width: 100%;
+                font-size: 14px;
+                padding: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                font-size: 14px;
+            }
+
+            .header-top {
+                flex-direction: column;
+                text-align: center;
+                padding: 10px;
+                gap: 5px;
+            }
+
+            .main-container {
+                padding-top: 20px; /* ajustado por JS */
+                padding-left: 10px;
+                padding-right: 10px;
+            }
+
+            .contenido-flex,
+            .formularios-abajo {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 20px;
+            }
+
+            .form-section,
+            .table-section {
+                width: 100%;
+                padding: 15px;
+                font-size: 14px;
+            }
+
+            form input,
+            form select,
+            form button {
+                width: 100%;
+                font-size: 16px;
+                padding: 10px;
+                margin-bottom: 10px;
+            }
+
+            .table-section {
+                overflow-x: auto;
+            }
+
+            table {
+                min-width: 600px; /* la tabla mantiene su tamaño y se hace scroll si no cabe */
+                font-size: 13px;
+            }
+
+            table img {
+                max-height: 60px;
+            }
+
+            .inicio a {
+                display: inline-block;
+                padding: 10px 16px;
+                font-size: 15px;
+            }
+
+            button#boton-descarga {
+                font-size: 14px;
+                width: 100%;
+                padding: 10px;
             }
         }
     </style>
 </head>
 <body>
 
-    <div class="header-top">
-        <div class="header-left"><?= htmlspecialchars($dbStatus) ?></div>
-        <div class="header-right">Usuario: <?= htmlspecialchars($username) ?></div>
-    </div>
+<div class="header-top">
+    <div><?= htmlspecialchars($dbStatus) ?></div>
+    <div>Usuario: <?= htmlspecialchars($username) ?></div>
+</div>
 
-    <div class="main-container">
-        <h2 style="color:black;">¡OTRA!</h2>
+<div class="main-container">
+    <h2>¡OTRA!</h2>
 
-        <div class="contenido-flex">
-            <!-- Formulario de inserción -->
-            <form method="POST" class="form-section">
-                <input name="nombre" placeholder="Nombre" required type="text">
-                <input name="procedencia" placeholder="Procedencia" type="text">
-                <input name="fermentacion" placeholder="Fermentación" type="text">
-                <input name="graduacion" placeholder="Graduación" type="text">
-                <input name="imagen" placeholder="URL Imagen" type="url">
-                <input name="sitios" placeholder="Sitios" type="text">
-                <input name="cuantas" type="number" value="1" min="1">
-                <button name="nueva" type="submit">Agregar</button>
-            </form>
+    <div class="contenido-flex">
+        <form method="POST" class="form-section">
+            <input name="nombre" placeholder="Nombre" required type="text">
+            <input name="procedencia" placeholder="Procedencia" type="text">
+            <input name="fermentacion" placeholder="Fermentación" type="text">
+            <input name="graduacion" placeholder="Graduación" type="text">
+            <input name="imagen" placeholder="URL Imagen" type="url">
+            <input name="sitios" placeholder="Sitios" type="text">
+            <input name="cuantas" type="number" value="1" min="1">
+            <button name="nueva" type="submit">Agregar</button>
+        </form>
 
-            <!-- Tabla -->
-            <div class="table-section">
+        <div class="table-section">
+            <button id="boton-descarga" onclick="descargarTabla()">📥 Descargar tabla</button>
+
+            <div id="captura-tabla">
                 <div class="table-scroll">
                     <table>
                         <thead>
@@ -273,7 +424,13 @@ $cervezas = $stmt->fetchAll();
                                     <td><?= htmlspecialchars($c['procedencia']) ?></td>
                                     <td><?= htmlspecialchars($c['fermentacion']) ?></td>
                                     <td><?= htmlspecialchars($c['graduacion']) ?>%</td>
-                                    <td><img src="<?= htmlspecialchars($c['imagen']) ?>" alt="Imagen de <?= htmlspecialchars($c['nombre']) ?>"></td>
+                                    <td>
+                                        <img src="<?= htmlspecialchars($c['imagen']) ?>" alt="Imagen" onclick="document.getElementById('fileInput<?= $c['id'] ?>').click();">
+                                        <form method="POST" action="subir_imagen.php" enctype="multipart/form-data" style="display:none;">
+                                            <input type="hidden" name="cerveza_id" value="<?= $c['id'] ?>">
+                                            <input type="file" name="nueva_imagen" id="fileInput<?= $c['id'] ?>" accept="image/*" onchange="this.form.submit();">
+                                        </form>
+                                    </td>
                                     <td><?= htmlspecialchars($c['cuantas']) ?></td>
                                     <td><?= htmlspecialchars($c['sitios']) ?></td>
                                 </tr>
@@ -282,39 +439,52 @@ $cervezas = $stmt->fetchAll();
                     </table>
                 </div>
             </div>
-        </div>
 
-        <!-- Formularios debajo del scroll -->
-        <div class="formularios-abajo">
-            <!-- Formulario de incrementar -->
-            <form method="post" action="unamas.php" class="form-section">
-                <label for="nombre">¿Cuál sumas?</label>
-                <select name="nombre" id="nombre">
-                    <?php foreach ($cervezas as $c): ?>
-                        <option value="<?= htmlspecialchars($c['nombre']) ?>">
-                            <?= htmlspecialchars($c['nombre']) ?> (<?= $c['cuantas'] ?>)
-                        </option>
-                    <?php endforeach; ?>
-                </select>
-                <button type="submit" name="incrementar">+1</button>
-            </form>
-
-            <!-- Formulario de eliminar -->
-            <form method="post" action="eliminar.php" class="form-section">
-                <label for="nombre">¿Quieres quitar alguna?</label>
-                <select name="nombre" id="nombre">
-                    <?php foreach ($cervezas as $c): ?>
-                        <option value="<?= htmlspecialchars($c['nombre']) ?>"><?= htmlspecialchars($c['nombre']) ?></option>
-                    <?php endforeach; ?>
-                </select>
-                <button type="submit" name="eliminar">Eliminar</button>
-            </form>
-        </div>
-
-        <!-- Cierre de sesión -->
-        <div class="inicio">
-            <a href="logout.php">Cerrar sesión</a>
         </div>
     </div>
+
+    <div class="formularios-abajo">
+        <form method="post" action="unamas.php" class="form-section">
+            <label for="nombre">¿Cuál sumas?</label>
+            <select name="nombre" id="nombre">
+                <?php foreach ($cervezas as $c): ?>
+                    <option value="<?= htmlspecialchars($c['nombre']) ?>">
+                        <?= htmlspecialchars($c['nombre']) ?> (<?= $c['cuantas'] ?>)
+                    </option>
+                <?php endforeach; ?>
+            </select>
+            <button type="submit" name="incrementar">+1</button>
+        </form>
+
+        <form method="post" action="eliminar.php" class="form-section">
+            <label for="nombre">¿Quieres quitar alguna?</label>
+            <select name="nombre" id="nombre">
+                <?php foreach ($cervezas as $c): ?>
+                    <option value="<?= htmlspecialchars($c['nombre']) ?>"><?= htmlspecialchars($c['nombre']) ?></option>
+                <?php endforeach; ?>
+            </select>
+            <button type="submit" name="eliminar">Eliminar</button>
+        </form>
+    </div>
+
+    <div class="inicio">
+        <a href="logout.php">Cerrar sesión</a>
+    </div>
+</div>
+
+<script>
+  function ajustarPaddingMain() {
+    const header = document.querySelector('.header-top');
+    const main = document.querySelector('.main-container');
+    if(header && main) {
+      const altoHeader = header.offsetHeight;
+      main.style.paddingTop = (altoHeader + 20) + 'px'; // 20px extra para separación
+    }
+  }
+
+  window.addEventListener('load', ajustarPaddingMain);
+  window.addEventListener('resize', ajustarPaddingMain);
+</script>
+
 </body>
 </html>
