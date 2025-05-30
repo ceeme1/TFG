@@ -143,7 +143,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <input type="password" name="contra" placeholder="Contraseña" required>
                 </div>
                 <div class="form-buttons">
-                    <input type="submit" value="Ingresar">
+                    <input type="submit" value="OtrAPP!!!">
                 </div>
             </form>
 
