@@ -272,5 +272,6 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <a href="logout.php" class="btn-cerrar-sesion">Cerrar sesión</a>
         </section>
     </div>
+    
 </body>
 </html>

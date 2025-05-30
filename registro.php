@@ -12,12 +12,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $existe = $stmt->fetchColumn();
 
     if ($existe) {
-        $mensaje = "El nombre de usuario ya está registrado. <a href='login.php'>Iniciar sesión</a>";
+        $mensaje = "El nombre de usuario ya está registrado. <a href='login.php' class='enlace-login'>Iniciar sesión</a>";
     } else {
         $contra = password_hash($contra_plana, PASSWORD_DEFAULT);
         $stmt = $pdo->prepare("INSERT INTO users (nombre, contra) VALUES (?, ?)");
         $stmt->execute([$nombre, $contra]);
-        $mensaje = "Usuario creado correctamente. <a href='login.php'>Iniciar sesión</a>";
+        $mensaje = "Usuario creado correctamente. <a href='login.php' class='enlace-login'>Iniciar sesión</a>";
     }
 }
 ?>
@@ -87,10 +87,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             color: #270;
             border: 1px solid #270;
         }
-
+       
         .centrado {
             text-align: center;
             margin-top: 10px;
+        }
+                .enlace-login {
+            color:rgb(0, 0, 0); /* naranja intenso */
+            font-weight: 900;
+            background-color:rgba(163, 142, 58, 0.4); /* fondo suave */
+            padding: 4px 8px;
+            border-radius: 6px;
+            text-decoration: none;
+            box-shadow: 0 0 5px #ff7f00;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .enlace-login:hover {
+            color: #fff;
+            background-color: #ff7f00;
+            box-shadow: 0 0 10px #ff7f00;
+            text-decoration: underline;
         }
         input[type="text"],
         input[type="password"] {
