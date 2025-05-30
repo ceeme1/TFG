@@ -152,7 +152,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <input type="submit" value="Crear usuario">
                 </div>
             </form>
+            <p><br>
+        <h6>C.M.A.S Dev/OtrAPP!!!-v.0.79<h6>
         </section>
+        
     </div>
+
 </body>
 </html>

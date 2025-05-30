@@ -18,6 +18,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['eliminar'])) {
     $mensaje = "Usuario '$nombre' eliminado correctamente.";
 }
 
+// Actualizar usuario (editar perfil)
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['editar'])) {
+    $nombreViejo = $_POST['nombre_viejo'];
+    $nombreNuevo = $_POST['nombre_nuevo'];
+
+    if ($nombreNuevo === '') {
+        $mensaje = "El nombre nuevo no puede estar vacío.";
+    } else {
+        $stmt = $pdo->prepare("UPDATE users SET nombre = ? WHERE nombre = ?");
+        $stmt->execute([$nombreNuevo, $nombreViejo]);
+        $mensaje = "Usuario '$nombreViejo' actualizado a '$nombreNuevo' correctamente.";
+    }
+}
+
 // Paginación
 $usuariosPorPagina = 10;
 $pagina = isset($_GET['pagina']) ? max(1, intval($_GET['pagina'])) : 1;
@@ -94,9 +108,11 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
         .usuario-nombre {
             color: #5d3c0a;
             font-weight: bold;
+            flex-grow: 1;
+            text-align: left;
         }
 
-        .btn-eliminar {
+        .btn-eliminar, .btn-editar, .btn-guardar, .btn-cancelar {
             background-color: #cc0000;
             color: black;
             border: none;
@@ -104,10 +120,35 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
             border-radius: 4px;
             cursor: pointer;
             font-weight: bold;
+            margin-left: 5px;
+        }
+
+        .btn-editar {
+            background-color: #f0ad4e;
+        }
+
+        .btn-guardar {
+            background-color: #4CAF50;
+        }
+
+        .btn-cancelar {
+            background-color: #888;
         }
 
         .btn-eliminar:hover {
             background-color: #e60000;
+        }
+
+        .btn-editar:hover {
+            background-color: #ec971f;
+        }
+
+        .btn-guardar:hover {
+            background-color: #45a049;
+        }
+
+        .btn-cancelar:hover {
+            background-color: #666;
         }
 
         .mensaje {
@@ -156,7 +197,34 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
         .btn-cerrar-sesion:hover {
             background-color:rgb(179, 116, 0);
         }
+
+        /* Formulario inline para editar */
+        .editar-form {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-grow: 1;
+        }
+
+        .editar-form input[type="text"] {
+            padding: 5px;
+            font-size: 1rem;
+            flex-grow: 1;
+        }
     </style>
+    <script>
+        function mostrarEditar(id) {
+            document.getElementById('nombre-display-' + id).style.display = 'none';
+            document.getElementById('botones-display-' + id).style.display = 'none';
+            document.getElementById('form-editar-' + id).style.display = 'flex';
+        }
+
+        function cancelarEditar(id) {
+            document.getElementById('nombre-display-' + id).style.display = 'block';
+            document.getElementById('botones-display-' + id).style.display = 'flex';
+            document.getElementById('form-editar-' + id).style.display = 'none';
+        }
+    </script>
 </head>
 <body>
     <div class="main-container">
@@ -164,15 +232,28 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <h2>Administrar Usuarios</h2>
 
             <?php if (!empty($mensaje)): ?>
-                <div class="mensaje exito"><?= $mensaje ?></div>
+                <div class="mensaje exito"><?= htmlspecialchars($mensaje) ?></div>
             <?php endif; ?>
 
-            <?php foreach ($usuarios as $usuario): ?>
-                <div class="usuario-item">
-                    <span class="usuario-nombre"><?= htmlspecialchars($usuario['nombre']) ?></span>
-                    <form method="POST" style="margin: 0;">
-                        <input type="hidden" name="nombre" value="<?= htmlspecialchars($usuario['nombre']) ?>">
-                        <button type="submit" name="eliminar" class="btn-eliminar" onclick="return confirm('¿Estás seguro de eliminar a <?= htmlspecialchars($usuario['nombre']) ?>?')">Eliminar</button>
+            <?php foreach ($usuarios as $usuario): 
+                $id = md5($usuario['nombre']); // ID único para HTML (evitar espacios y caracteres raros)
+            ?>
+                <div class="usuario-item" id="usuario-<?= $id ?>">
+                    <span class="usuario-nombre" id="nombre-display-<?= $id ?>"><?= htmlspecialchars($usuario['nombre']) ?></span>
+                    <div id="botones-display-<?= $id ?>" style="display: flex; gap: 5px;">
+                        <button class="btn-editar" onclick="mostrarEditar('<?= $id ?>')">Editar</button>
+                        <form method="POST" style="margin: 0;">
+                            <input type="hidden" name="nombre" value="<?= htmlspecialchars($usuario['nombre']) ?>">
+                            <button type="submit" name="eliminar" class="btn-eliminar" onclick="return confirm('¿Estás seguro de eliminar a <?= htmlspecialchars($usuario['nombre']) ?>?')">Eliminar</button>
+                        </form>
+                    </div>
+
+                    <!-- Formulario de edición oculto -->
+                    <form method="POST" class="editar-form" id="form-editar-<?= $id ?>" style="display: none;">
+                        <input type="hidden" name="nombre_viejo" value="<?= htmlspecialchars($usuario['nombre']) ?>">
+                        <input type="text" name="nombre_nuevo" value="<?= htmlspecialchars($usuario['nombre']) ?>" required>
+                        <button type="submit" name="editar" class="btn-guardar">Guardar</button>
+                        <button type="button" class="btn-cancelar" onclick="cancelarEditar('<?= $id ?>')">Cancelar</button>
                     </form>
                 </div>
             <?php endforeach; ?>
@@ -188,7 +269,6 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <?php endif; ?>
             </div>
 
-            
             <a href="logout.php" class="btn-cerrar-sesion">Cerrar sesión</a>
         </section>
     </div>
