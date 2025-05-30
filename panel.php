@@ -86,6 +86,7 @@ $cervezas = $stmt->fetchAll();
         }
 
         .main-container {
+            margin-top:80px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -425,11 +426,11 @@ $cervezas = $stmt->fetchAll();
                                     <td><?= htmlspecialchars($c['fermentacion']) ?></td>
                                     <td><?= htmlspecialchars($c['graduacion']) ?>%</td>
                                     <td>
-                                        <?php if (!empty($c['imagen'])): ?>
-                                            <img src="<?= htmlspecialchars($c['imagen']) ?>" alt="Imagen" onclick="document.getElementById('fileInput<?= $c['id'] ?>').click();">
-                                        <?php else: ?>
-                                            <span style="font-size: 2rem; cursor: default;">😢</span>
-                                        <?php endif; ?>
+                                    <?php if (!empty($c['imagen'])): ?>
+                                        <img src="<?= htmlspecialchars($c['imagen']) ?>" alt="Imagen" style="cursor:pointer;" onclick="document.getElementById('fileInput<?= $c['id'] ?>').click();">
+                                    <?php else: ?>
+                                        <span style="font-size: 2rem; cursor: pointer;" onclick="document.getElementById('fileInput<?= $c['id'] ?>').click();">😢</span>
+                                    <?php endif; ?>
 
                                         <form method="POST" action="subir_imagen.php" enctype="multipart/form-data" style="display:none;">
                                             <input type="hidden" name="cerveza_id" value="<?= $c['id'] ?>">
