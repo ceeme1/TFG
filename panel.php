@@ -394,7 +394,7 @@ $cervezas = $stmt->fetchAll();
             <input name="procedencia" placeholder="Procedencia" type="text">
             <input name="fermentacion" placeholder="Fermentación" type="text">
             <input name="graduacion" placeholder="Graduación" type="text">
-            <input name="imagen" placeholder="URL Imagen" type="url">
+            <input name="imagen" placeholder="URL Imagen o sube la tuya" type="url">
             <input name="sitios" placeholder="Sitios" type="text">
             <input name="cuantas" type="number" value="1" min="1">
             <button name="nueva" type="submit">Agregar</button>
