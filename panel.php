@@ -40,7 +40,7 @@ $cervezas = $stmt->fetchAll();
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Mi colección de cervezas</title>
+    <title>Mi OTRAPP!!!</title>
     <link rel="stylesheet" href="estilo.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script>
@@ -89,7 +89,7 @@ $cervezas = $stmt->fetchAll();
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding-top: 120px;
+            padding-top: 20px; /* Ajustado con JS */
             gap: 30px;
         }
 
@@ -170,7 +170,6 @@ $cervezas = $stmt->fetchAll();
             border: 2px solidrgb(77, 50, 3);
             border-radius: 6px;
             transition: background-color 0.3s, color 0.3s;
-        
         }
 
         .inicio a:hover {
@@ -179,64 +178,204 @@ $cervezas = $stmt->fetchAll();
         }
 
         @media (max-width: 991px) {
-                    body, html {
-            height: 100%;
-            margin: 0;
-            padding: 0;
-            overflow-y: auto; /* que se pueda hacer scroll vertical siempre */
+            body, html {
+                height: 100%;
+                margin: 0;
+                padding: 0;
+                overflow-y: auto; /* que se pueda hacer scroll vertical siempre */
+            }
+
+            .main-container {
+                /* Quitar margin-top fijo grande */
+                padding-top: 20px; /* será ajustado por JS */
+                padding-left: 10px;
+                padding-right: 10px;
+                box-sizing: border-box;
+            }
+            .contenido-flex {
+                flex-direction: column;
+                align-items: stretch;
+                width: 100%;
+                gap: 30px; /* más espacio entre formulario y tabla */
+                padding: 0 10px; /* evitar que toque los bordes de la pantalla */
+                box-sizing: border-box;
+            }
+
+            .form-section, .table-section {
+                width: 100%;
+                max-width: none;
+                box-sizing: border-box;
+                min-width: 0; /* para evitar que flex los expanda más allá del contenedor */
+            }
+
+            .table-section {
+                overflow-x: auto;
+            }
+
+            table {
+                min-width: 600px;
+                font-size: 14px;
+            }
+
+            table img {
+                max-height: 80px;
+            }
+
+            .formularios-abajo {
+                flex-direction: column;
+                width: 100%;
+                gap: 15px;
+                padding: 0 10px;
+                box-sizing: border-box;
+            }
+
+            form input, form select, form button {
+                width: 100%;
+                box-sizing: border-box;
+                margin-bottom: 10px;
+                font-size: 16px;
+            }
         }
 
-        .main-container {
-            margin-top:540px;
-            padding-top: 120px; /* espacio para header fijo */
-            padding-left: 10px;
-            padding-right: 10px;
-            box-sizing: border-box;
+        @media (max-width: 899px) {
+            body, html {
+                height: 100%;
+                margin: 0;
+                padding: 0;
+                overflow-y: auto; /* permitir scroll vertical */
+            }
+
+            .main-container {
+                /* Quitar margin-top fijo grande */
+                padding-top: 20px; /* será ajustado por JS */
+                padding-left: 10px;
+                padding-right: 10px;
+                box-sizing: border-box;
+            }
+
+            .contenido-flex {
+                flex-direction: column;
+                align-items: stretch;
+                width: 100%;
+                gap: 25px; /* espacio entre form y tabla */
+                padding: 0 10px;
+                box-sizing: border-box;
+            }
+
+            .form-section,
+            .table-section {
+                width: 100%;
+                max-width: none;
+                box-sizing: border-box;
+                min-width: 0;
+                padding: 15px;
+                font-size: 14px;
+            }
+
+            .table-section {
+                overflow-x: auto; /* scroll horizontal para tablas */
+            }
+
+            table {
+                min-width: 600px; /* ancho mínimo para que tabla no se achique */
+                font-size: 13px;
+            }
+
+            table img {
+                max-height: 60px;
+            }
+
+            .formularios-abajo {
+                flex-direction: column;
+                width: 100%;
+                gap: 15px;
+                padding: 0 10px;
+                box-sizing: border-box;
+            }
+
+            form input,
+            form select,
+            form button {
+                width: 100%;
+                box-sizing: border-box;
+                margin-bottom: 10px;
+                font-size: 16px;
+                padding: 8px;
+            }
+
+            button#boton-descarga {
+                width: 100%;
+                font-size: 14px;
+                padding: 10px;
+            }
         }
-    .contenido-flex {
-        flex-direction: column;
-        align-items: stretch;
-        width: 100%;
-        gap: 30px; /* más espacio entre formulario y tabla */
-        padding: 0 10px; /* evitar que toque los bordes de la pantalla */
-        box-sizing: border-box;
-    }
 
-    .form-section, .table-section {
-        width: 100%;
-        max-width: none;
-        box-sizing: border-box;
-        min-width: 0; /* para evitar que flex los expanda más allá del contenedor */
-    }
+        @media (max-width: 480px) {
+            body {
+                font-size: 14px;
+            }
 
-    .table-section {
-        overflow-x: auto;
-    }
+            .header-top {
+                flex-direction: column;
+                text-align: center;
+                padding: 10px;
+                gap: 5px;
+            }
 
-    table {
-        min-width: 600px;
-        font-size: 14px;
-    }
+            .main-container {
+                padding-top: 20px; /* ajustado por JS */
+                padding-left: 10px;
+                padding-right: 10px;
+            }
 
-    table img {
-        max-height: 80px;
-    }
+            .contenido-flex,
+            .formularios-abajo {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 20px;
+            }
 
-    .formularios-abajo {
-        flex-direction: column;
-        width: 100%;
-        gap: 15px;
-        padding: 0 10px;
-        box-sizing: border-box;
-    }
+            .form-section,
+            .table-section {
+                width: 100%;
+                padding: 15px;
+                font-size: 14px;
+            }
 
-    form input, form select, form button {
-        width: 100%;
-        box-sizing: border-box;
-        margin-bottom: 10px;
-        font-size: 16px;
-    }
-}
+            form input,
+            form select,
+            form button {
+                width: 100%;
+                font-size: 16px;
+                padding: 10px;
+                margin-bottom: 10px;
+            }
+
+            .table-section {
+                overflow-x: auto;
+            }
+
+            table {
+                min-width: 600px; /* la tabla mantiene su tamaño y se hace scroll si no cabe */
+                font-size: 13px;
+            }
+
+            table img {
+                max-height: 60px;
+            }
+
+            .inicio a {
+                display: inline-block;
+                padding: 10px 16px;
+                font-size: 15px;
+            }
+
+            button#boton-descarga {
+                font-size: 14px;
+                width: 100%;
+                padding: 10px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -332,6 +471,20 @@ $cervezas = $stmt->fetchAll();
         <a href="logout.php">Cerrar sesión</a>
     </div>
 </div>
+
+<script>
+  function ajustarPaddingMain() {
+    const header = document.querySelector('.header-top');
+    const main = document.querySelector('.main-container');
+    if(header && main) {
+      const altoHeader = header.offsetHeight;
+      main.style.paddingTop = (altoHeader + 20) + 'px'; // 20px extra para separación
+    }
+  }
+
+  window.addEventListener('load', ajustarPaddingMain);
+  window.addEventListener('resize', ajustarPaddingMain);
+</script>
 
 </body>
 </html>

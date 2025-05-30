@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Registro</title>
+    <title>Registro OTRAPP!!!</title>
     <link rel="stylesheet" href="estilo.css">
     <style>
         body {

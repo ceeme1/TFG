@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Iniciar Sesión</title>
+    <title>OTRAPP!!!</title>
     <link rel="stylesheet" href="estilo.css">
     <style>
         body {

@@ -37,7 +37,7 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Administrar Usuarios</title>
+    <title>Administrar Usuarios OTRAPP!!!</title>
     <link rel="stylesheet" href="estilo.css">
     <style>
         body {
